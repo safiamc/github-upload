@@ -1,0 +1,387 @@
+\documentclass{beamer}
+\mode<presentation>
+{
+  \usetheme{Warsaw}
+  % or ...
+
+  \setbeamercovered{transparent}
+  % or whatever (possibly just delete it)
+}
+
+
+\usepackage[english]{babel}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{mathrsfs}
+\usepackage{amsthm}
+\usepackage{mathtools}
+\usepackage{thmtools}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{rotating}
+\usepackage[utf8]{inputenc}
+\usepackage{animate}
+\usepackage{centernot}
+\usepackage{tikz-cd}
+\usepackage{times}
+%\usepackage[T1]{fontenc}
+
+\DeclareMathOperator{\Conf}{Conf}
+\DeclareMathOperator{\UConf}{\overline{Conf}}
+\DeclareMathOperator{\Star}{Star}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\C}{\Conf_n(X)}
+\newcommand{\G}{\Gamma}
+\newcommand{\CG}{\Conf_n(\Gamma)}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\UC}{\UConf_n(X)}
+\newcommand{\UCG}{\UConf_n(\Gamma)}
+\newcommand{\DG}{\mathcal{D}_n(\Gamma)}
+\newcommand{\KG}{K_n(\Gamma)}
+\newcommand{\DKG}{\mathcal{D}_{n,k}(\Gamma)}
+\newcommand{\CKG}{\Conf_{n,k}(\Gamma)}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{claim}[theorem]{Claim}
+\newtheorem{conj}[theorem]{Conjecture}
+\title{Impossible Walks and Planar Graphs} 
+
+%\subtitle
+%{Include Only If Paper Has a Subtitle}
+
+\author
+{Safia Chettih}
+% - Give the names in the same order as the appear in the paper.
+% - Use the \inst{?} command only if the authors have different
+%   affiliation.
+
+\institute{Reed College} % (optional, but mostly needed)
+
+
+\date[ATS] 
+{St Mary's Academy, April 24th 2018}
+
+
+
+% If you have a file called "university-logo-filename.xxx", where xxx
+% is a graphic format that can be processed by latex or pdflatex,
+% resp., then you can add a logo as follows:
+
+ \pgfdeclareimage[height=0.5cm]{university-logo}{griffin.png}
+ \logo{\pgfuseimage{university-logo}}
+
+% If you wish to uncover everything in a step-wise fashion, uncomment
+% the following command: 
+
+%\beamerdefaultoverlayspecification{<+->}
+
+\begin{document}
+\begin{frame}
+\titlepage
+\end{frame}
+
+\section{Eulerian Walks}
+
+\begin{frame}{Bridges of Königsberg}
+\centering
+At first, there were 6 bridges in the town of Königsberg\\
+\includegraphics[scale=0.5]{6bridge.png}
+
+and you could take a stroll across each bridge exactly once.
+\end{frame}
+\begin{frame}{Bridges of Königsberg}
+\centering
+At first, there were 6 bridges in the town of Königsberg\\
+\includegraphics[scale=0.5]{6bridgep.png}
+
+and you could take a stroll across each bridge exactly once.
+\end{frame}
+\begin{frame}{Bridges of Königsberg}
+\centering
+But when they built another bridge, no one could figure out how to do it anymore.\\
+\includegraphics[scale=0.5]{7bridge.png}
+
+It seemed like no matter which way they went, they would always miss a bridge or get stuck.
+\end{frame}
+\begin{frame}{Bridges of Königsberg}
+\centering
+But when they built another bridge, no one could figure out how to do it anymore.\\
+\includegraphics[scale=0.5]{7bridgep1.png}
+
+It seemed like no matter which way they went, they would always miss a bridge or get stuck.
+\end{frame}\begin{frame}{Bridges of Königsberg}
+\centering
+But when they built another bridge, no one could figure out how to do it anymore.\\
+\includegraphics[scale=0.5]{7bridgep2.png}
+
+It seemed like no matter which way they went, they would always miss a bridge or get stuck.
+\end{frame}
+\begin{frame}{Bridges of Königsberg}
+\centering
+Does a walk that passes through each bridge exactly once exist?\\
+\includegraphics[scale=0.5]{7bridge.png}
+\end{frame}
+
+\begin{frame}{Bridges of Königsberg}
+\centering
+Does a walk that passes through each bridge exactly once exist?\\
+\includegraphics[scale=0.5]{7bridgeg1.png}
+\end{frame}
+
+\begin{frame}{Bridges of Königsberg}
+\centering
+Does a walk that passes through each bridge exactly once exist?\\
+\includegraphics[scale=0.5]{7bridgeg2.png}
+\end{frame}
+\begin{frame}{Graphs}
+Is there a walk on the graph that passes through each edge exactly once?\\
+\centering
+\includegraphics[scale=0.5]{Euler_graph}
+\end{frame}
+\begin{frame}{Graphs}
+Is there a walk on the graph that passes through each edge exactly once?\\
+NO \hfill
+\includegraphics[scale=0.25]{Euler_graph}\hfill
+\includegraphics[scale=0.2]{bball_graph}\hfill
+\includegraphics[scale=0.2]{pent_graph}\\
+\hrulefill\vspace*{.2cm}\\
+YES \hfill
+\includegraphics[scale=0.25]{Euler_graphno}\hfill
+\includegraphics[scale=0.2]{bball_graphno}\hfill
+\includegraphics[scale=0.2]{pent_graphno}
+
+\end{frame}
+\begin{frame}{Definitions}
+A \textbf{graph} is a collection of vertices and edges between them.\\
+How we draw a graph is not unique.\\
+\includegraphics[scale=0.4]{K4}
+\includegraphics[scale=0.4]{K4_planar}
+\end{frame}
+\begin{frame}{Definitions}
+The \textbf{degree} of a vertex is the number of edges attached to it.
+
+\begin{minipage}{.5\textwidth}
+\hspace*{.5cm}
+\includegraphics[scale=0.25]{bball_graph}
+\end{minipage}
+\begin{minipage}{.4\textwidth}
+Every vertex in this graph has degree 3.
+\end{minipage}
+
+\begin{minipage}{.5\textwidth}
+\hspace*{-.5cm}
+\includegraphics[scale=0.3]{Euler_graphno}
+\end{minipage}
+\begin{minipage}{.4\textwidth}
+The degrees of the vertices in this graph are 4, 3, 3, 2.
+\end{minipage}
+\end{frame}
+\begin{frame}
+How does degree relate to the number of edges?\vspace*{1cm}\\
+\begin{minipage}{.3\textwidth}
+\centering
+\includegraphics[scale=0.2]{bball_graph}\\
+deg: 3, 3, 3, 3\\
+\# of edges: 6
+\end{minipage}
+\begin{minipage}{.3\textwidth}
+\centering
+\includegraphics[scale=0.25]{Euler_graphno}\\
+deg: 4, 3, 3, 2\\
+\# of edges: 6
+\end{minipage}
+\begin{minipage}{.3\textwidth}
+\centering
+\includegraphics[scale=0.25]{Euler_graph}\\
+deg: 5, 3, 3, 3\\
+\# of edges: 7
+\end{minipage}
+\end{frame}
+\begin{frame}{Multiple Choice}
+Suppose I have a graph whose vertices have degrees 2, 2, 1, 1. How many edges does it have?
+\begin{itemize}
+\item 2
+\item 3
+\item 4
+\item 5
+\end{itemize}
+\end{frame}
+\begin{frame}{Multiple Choice}
+Suppose I have a graph whose vertices have degrees 2, 2, 1, 1. How many edges does it have?
+\begin{columns}
+\begin{column}{.5\textwidth}
+\begin{itemize}
+\item 2
+\item \fcolorbox{red}{white}{3}
+\item 4
+\item 5
+\end{itemize}
+\end{column}
+\begin{column}{.5\textwidth}
+\includegraphics[scale=0.4]{mchoice1}
+\end{column}
+\end{columns}
+Why? If we sum all the degrees, each edge gets counted twice.
+\end{frame}
+\begin{frame}{Degree Theorem}
+\begin{theorem} The sum of the degrees of all vertices in a graph is twice the number of edges.
+$$ \sum_{v \in V(G)} \deg{v} = 2E$$
+\end{theorem}
+\textit{Corollary.} The number of vertices with odd degree is even.\medskip\\
+It is impossible to draw a graph with an odd number of vertices where all of them have odd degree!
+\end{frame}
+\begin{frame}{Definitions}
+Two vertices are \textbf{adjacent} if there is an edge between them.\\
+A \textbf{walk} is a sequence of adjacent vertices and the edges between them.\vspace*{.5cm}\\
+{\centering \includegraphics[scale=0.5]{K4_walk}}
+\end{frame}
+\begin{frame}
+How do walks relate to degree?\vspace{.5cm}
+\begin{columns}
+\begin{column}{.5\textwidth}
+If a walk enters a vertex with even degree, it exits as well.\vspace*{.2cm}\\
+\includegraphics[scale=0.3]{even_deg}
+\end{column}
+\begin{column}{.5\textwidth}
+If a walk enters a vertex with odd degree, it may get stuck or it may exit.\vspace*{.2cm}\\
+\includegraphics[scale=0.3]{odd_deg}
+\end{column}
+\end{columns}\vspace*{.2cm}
+Walks that pass through vertices leave untouched edges with the same parity (even or odd) as the degree of the vertex.
+\end{frame}
+\begin{frame}{Eulerian Walks} A walk is \textbf{Eulerian} (pronounced ``oilerian'') if it passes through each edge of the graph exactly once.
+\begin{description}
+\item[4 or more vertices of odd degree:] there is no Eulerian walk\\
+\includegraphics[scale=0.2]{K4_planar}
+\item[exactly 3 vertice of odd degree:] impossible by corollary, because vertices with odd degree occur in pairs
+
+\end{description}
+\end{frame}
+\begin{frame}{Eulerian Walks}
+\begin{description}
+\item[exactly 2 vertices of odd degree:] any Eulerian walk starts at one and ends at the other\\
+\includegraphics[scale=0.2]{Euler_graphno}
+\item[exactly 1 vertex of odd degree:] impossible by corollary
+\item[no vertices of odd degree:] any Eulerian walk must start and end in the same place\\
+\includegraphics[scale=0.2]{pent_graphno}
+\end{description}
+\end{frame}
+\begin{frame}{Finding Eulerian Walks}
+Look for the vertices of odd degree!\vspace*{.2cm}\\
+\includegraphics[scale=0.5]{Euler_ex}
+\end{frame}
+\begin{frame}{Finding Eulerian Walks}
+Look for the vertices of odd degree!\vspace*{.2cm}\\
+\includegraphics[scale=0.5]{Euler_ex_walk}
+\end{frame}
+\section{Planar Graphs}
+\begin{frame}{Definitions}
+A \textbf{connected} graph has at least one walk between any pair of vertices.\\
+If we draw a connected graph so that no edges cross, we can count the number of faces of the graph by counting the `holes', including the empty space around the graph.\vspace*{.2cm}\\
+{\centering
+\includegraphics[scale=0.3]{K4_formula}\\
+\hfill $F=4$, $E=6$, $V=4$\hfill}
+\end{frame}
+\begin{frame}{Euler's Formula}
+\begin{columns}
+\begin{column}{0.35\textwidth}
+\centering
+\includegraphics[scale=0.2]{pent_graph}\\
+$F=5$\\ $E=8$\\ $V=5$
+\end{column}
+\begin{column}{0.35\textwidth}
+\centering
+\includegraphics[scale=0.2]{loop_graph}\\
+$F=3$\\ $E=5$\\$V=4$
+\end{column}
+\begin{column}{0.35\textwidth}
+\centering
+\includegraphics[scale=0.2]{bball_graph}\\
+$F=4$\\ $E=6$\\ $V=4$
+\end{column}
+\end{columns}
+\end{frame}
+\begin{frame}{Multiple Choice}
+Suppose I have a connected graph with 3 faces and 3 vertices. How many edges does the graph have, if it can be drawn so that none of the edges are crossing?
+\begin{itemize}
+\item 3
+\item 4
+\item 5
+\item 6
+\end{itemize}
+\end{frame}
+\begin{frame}{Multiple Choice}
+Suppose I have a connected graph with 3 faces and 3 vertices. How many edges does the graph have, if it can be drawn so that none of the edges are crossing?
+\begin{columns}
+\begin{column}{.5\textwidth}
+\begin{itemize}
+\item 3
+\item  \fcolorbox{red}{white}{4}
+\item 5
+\item 6
+\end{itemize}
+\end{column}
+\begin{column}{.5\textwidth}
+\includegraphics[scale=0.4]{mchoice2}
+\end{column}
+\end{columns}
+$F+V=E+2$. Why?
+\end{frame}
+\begin{frame}{Proof by Induction}
+If we have the most simple graph possible, we can check that it satisfies $F+V=E+2$:\vspace*{.2cm}\\
+\includegraphics[scale=0.2]{bar}\vspace*{.2cm}\\
+If we add a vertex, we have to connect it with an edge, $F+(V+1)=(E+1)+2$:\vspace*{.2cm}\\
+\includegraphics[scale=0.2]{vertex_add}
+\end{frame}
+\begin{frame}{Euler's Formula}
+If we add an edge between two existing vertices, we divide a face into two, $(F+1)+V=(E+1)+2$:\vspace*{.2cm}\\
+\includegraphics[scale=0.2]{edge_add}\vspace*{.2cm}\\
+A \textbf{planar} graph is a graph that can be drawn so that there are no edges crossing.
+\begin{theorem}[Euler] For any connected, planar graph, $F+V=E+2$.
+\end{theorem}
+\end{frame}
+\begin{frame}{Nonplanar Graphs}
+Not every graph is planar!\vspace*{.2cm}\\
+\includegraphics[scale=0.5]{K33} \hfill \includegraphics[scale=0.4]{K33_alt}\vspace*{.2cm}\\
+This graph violates Euler's Formula.
+\end{frame}
+
+\begin{frame}{Nonplanar Graphs}
+\includegraphics[scale=0.25]{K33_alt}\vspace*{.2cm}\\
+Any face must have at least 4 edges on its boundary, but each edge is counted twice, so $E\geq\frac{4F}{2}=2F$.\\
+ But $V=6$, $E=9$ so Euler's formula gives 
+ \begin{align*}
+ F+6 &= 9 + 2 = 11\\
+ F=5
+ \end{align*}
+ But $E = 9 \not\geq2F= 2 \cdot 5 = 10$, so the graph can't possibly be planar.
+\end{frame}
+\begin{frame}{Summary}
+\begin{itemize}
+\item To know whether a graph has a walk that passes through each edge exactly once, count the number of vertices with an odd number of edges coming out. If there are 4 or more, then it's impossible.
+\item If you can draw a graph with no edges crossing, then it satisfies the formula $F+V=E+2$.
+\item If it doesn't satisfy the formula, then every drawing will have at least one crossing.
+\end{itemize}
+\end{frame}
+\begin{frame}
+\huge{Thank you!}\vspace*{.2cm}
+    \normalsize
+    
+  My email:
+  \texttt{safia@reed.edu}
+  \begin{thebibliography}{10}
+
+  \beamertemplatearticlebibitems
+  \bibitem{Trudeau}
+    R.~Trudeau.
+\newblock Introduction to Graph Theory (Dover Books on Mathematics).
+\bibitem{Fasc}
+ A.~Benjamin, G.~ Chartrand, and P.~Zhang.
+ \newblock The Fascinating World of Graph Theory.
+ \bibitem{brill}
+  \url{https://brilliant.org/wiki/graph-theory/}
+   \end{thebibliography}
+  
+\end{frame}
+
+\end{document}
